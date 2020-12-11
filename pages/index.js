@@ -1,65 +1,62 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from "react";
+import useSWR from "swr";
+import {useRouter} from 'next/router'
+
+import Layout from "../components/layout";
+import oauth from '../components/oauth'
+import {deleteTokens, getTokensForBrowser} from '../lib/cookie'
+
+const fetcher = url => fetch(url).then(r => r.json())
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	let {data, error} = useSWR('/api/user', fetcher);
+	const router = useRouter()
+	const user = data;
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	const [isLoading, setIsLoading] = useState(false);
+	
+	const url = oauth.generateAuthUrl({
+        scope: ["identify", "guilds"]
+	});
+	const buttonCSS = "h-40 w-40 bg-blue-200"
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+	const logout = async (e) => {
+		const tokens = getTokensForBrowser();
+		const credentials = Buffer.from(`${process.env.DISCORD_CLIENT_ID}:${process.env.DISCORD_CLIENT_SECRET}`).toString("base64");
+		await oauth.revokeToken(tokens.access_token, credentials);
+		deleteTokens();
+	}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+	/*
+	You want to store the loading status in the state.
+	Set it to false. 
+	When you click logout, set that to true. 
+	Once the function is resolved, set to false again.
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+	oh that's smart. can you show me lol, i came up with a really jank solution for loading stuff.
+	
+	yeah you can use the useState()
+	*/
+	
+	if (!user) {
+		return <h1>Loading...</h1>
+	}
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+	const guildNames = user && user.guilds ? user.guilds.map((guild) => guild.name) : []
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    return (
+        <Layout>
+            <h1 className="text-5xl font-bold text-purple-500">
+                Hello, {user.available ? user.username : "world"}!
+            </h1>
+			<ul>
+			{ 
+				guildNames.map((guildName) => <li>{guildName}</li>)
+			}
+			</ul>
+            {
+				!user.available ? <a href={url}><button className={buttonCSS}>Login</button></a> : <button onClick={logout} className={buttonCSS}>Logout</button>
+			}
+        </Layout>
+    );
 }
