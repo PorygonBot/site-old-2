@@ -31,7 +31,7 @@ export default function Layout({ children }) {
         router.reload();
     };
 
-    if (isLoading === true || !user) {
+    if (isLoading || !user) {
         return <h1>Loading...</h1>;
     }
 
