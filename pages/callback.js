@@ -13,7 +13,7 @@ function Callback(props) {
 
         const data = await oauth.tokenRequest({
             code: props.code,
-            scope: "identify guilds",
+            scope: ["identify", "guilds"],
             grantType: "authorization_code",
         }).catch((e) => {console.error(e)});
         if (data !== 400) {
