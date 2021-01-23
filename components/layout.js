@@ -13,13 +13,14 @@ const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Layout({ children }) {
     let { data, error } = useSWR("/api/user", fetcher);
-    const router = useRouter();
     const user = data;
 
     return (
-        <div>
+        <div className="bg-gray-main">
             <Header />
-            {children}
+                <div className="font-mono">
+                    {children}
+                </div>
             <Footer />
         </div>
     );

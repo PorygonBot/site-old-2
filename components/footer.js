@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <div className="bg-black fixed pb-2 pt-2 bottom-0">
+        <div className="bg-black pb-2 pt-2 bottom-0">
             <div className="bottom-0">
                 <p className="text-gray-500 text-xs">
                     Site and bot created by{" "}

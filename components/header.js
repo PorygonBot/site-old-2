@@ -36,68 +36,70 @@ export default function Header() {
     }
 
     return (
-        <div className="bg-black flex justify-between p-2 items-center">
-            <div className="flex text-white items-center">
-                <Link href="/">
-                    <a>
-                        <div className="inline-flex mt-2">
-                            <Image
-                                src="/PorygonLogoCircle.png"
-                                width={45}
-                                height={45}
-                            />
-                        </div>
-                    </a>
-                </Link>
-                <ul className="inline-flex text-white text-lg font-bold">
-                    <Link href="https://discord.com/api/oauth2/authorize?client_id=692091256477581423&permissions=0&scope=bot">
-                        <a target="_blank">
-                            <li className="hover:text-gray-400 ml-3 mr-2">
-                                Invite
-                            </li>
+        <div className="">
+            <div className="bg-gray-dark flex justify-between p-2 items-center">
+                <div className="flex text-white items-center">
+                    <Link href="/">
+                        <a>
+                            <div className="inline-flex mt-2 transform hover:rotate-12">
+                                <Image
+                                    src="/PorygonLogoCircle.png"
+                                    width={45}
+                                    height={45}
+                                />
+                            </div>
                         </a>
                     </Link>
-                    <Link href="https://discord.gg/ZPTMZ8f">
-                        <a target="_blank">
-                            <li className="hover:text-gray-400 ml-3 mr-2">
-                                Server
-                            </li>
-                        </a>
-                    </Link>
-                    <Link href="https://bit.ly/porygon">
-                        <a target="_blank">
-                            <li className="hover:text-gray-400 ml-3 mr-2">
-                                Documentation
-                            </li>
-                        </a>
-                    </Link>
-                </ul>
-            </div>
+                    <ul className="inline-flex text-white text-lg font-bold">
+                        <Link href="https://discord.com/api/oauth2/authorize?client_id=692091256477581423&permissions=0&scope=bot">
+                            <a target="_blank">
+                                <li className="hover:text-gray-400 ml-3 mr-2">
+                                    Invite
+                                </li>
+                            </a>
+                        </Link>
+                        <Link href="https://discord.gg/ZPTMZ8f">
+                            <a target="_blank">
+                                <li className="hover:text-gray-400 ml-3 mr-2">
+                                    Server
+                                </li>
+                            </a>
+                        </Link>
+                        <Link href="https://bit.ly/porygon">
+                            <a target="_blank">
+                                <li className="hover:text-gray-400 ml-3 mr-2">
+                                    Documentation
+                                </li>
+                            </a>
+                        </Link>
+                    </ul>
+                </div>
 
-            <div>
-                {!user.available ? (
-                    <button
-                        onClick={(e) => router.push(url)}
-                        className="w-24 h-12 text-pink-400 hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-400 bg-transparent hover:bg-pink-400"
-                    >
-                        Login
-                    </button>
-                ) : (
-                    <div>
+                <div>
+                    {!user.available ? (
                         <button
-                            onClick={(e) => router.push("/dashboard")}
-                            className="mr-2 w-24 h-12 text-pink-400 hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-400 bg-transparent hover:bg-pink-400"
+                            onClick={(e) => router.push(url)}
+                            className="w-24 h-12 text-pink-main hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-main bg-transparent hover:bg-pink-main"
                         >
-                            Dashboard
+                            Login
                         </button>
-                        <button
-                            onClick={logout}
-                            className="w-24 h-12 text-pink-400 hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-400 bg-transparent hover:bg-pink-400"
-                        >
-                            Logout
-                        </button>
-                    </div>
-                )}
+                    ) : (
+                        <div>
+                            <button
+                                onClick={(e) => router.push("/dashboard")}
+                                className="mr-2 w-24 h-12 text-pink-main hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-main bg-transparent hover:bg-pink-main"
+                            >
+                                Dashboard
+                            </button>
+                            <button
+                                onClick={logout}
+                                className="w-24 h-12 text-pink-main hover:text-white text-sm text-center font-bold rounded-lg border-2 border-pink-main bg-transparent hover:bg-pink-main"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

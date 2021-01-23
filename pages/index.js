@@ -18,7 +18,17 @@ export default function Home() {
 
     return (
         <Layout>
-            <p>Hello, {user.available ? user.username : "world"}!</p>
+            <div className="h-60 bg-fixed bg-center bg-no-repeat bg-cover">
+                <h1 className="text-5xl">Porygon</h1>
+            </div>
+
+            <div className="bg-gray-medium2 h-60">
+                <p>yuh yuh</p>
+            </div>
+
+            <div className="h-60 bg-fixed bg-center bg-no-repeat bg-cover">
+                <p>What's up people!</p>
+            </div>
         </Layout>
     );
 }

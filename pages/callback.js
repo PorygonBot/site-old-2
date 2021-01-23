@@ -15,7 +15,8 @@ function Callback(props) {
             code: props.code,
             scope: ["identify", "guilds"],
             grantType: "authorization_code",
-        }).catch((e) => {console.error(e)});
+        });
+        console.log("i'm everywhere!!!!!!");
         if (data !== 400) {
             saveTokens(data.access_token, data.refresh_token);
         }
